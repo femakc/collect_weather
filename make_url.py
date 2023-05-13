@@ -1,7 +1,5 @@
 from city_geo import get_geo
-
-BASE_URL = "https://api.openweathermap.org/"
-API_KEY = "0101452058a9a7945c8b353b7f8d618f"
+from settings import BASE_URL, API_KEY
 
 
 async def make_weather_url(city):

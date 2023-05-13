@@ -1,8 +1,9 @@
 import aiohttp
+from settings import X_API_KEY
 
 # BASE_URL = "https://api.openweathermap.org/"
 # API_KEY = "0101452058a9a7945c8b353b7f8d618f"
-X_API_KEY = "hgwMzL0zKdvwe2cljulQ9g==ToLekCxPkDwwFoON"
+# X_API_KEY = "hgwMzL0zKdvwe2cljulQ9g==ToLekCxPkDwwFoON"
 
 "https://api.api-ninjas.com/v1/city?max_population=100000000&limit=50"
 

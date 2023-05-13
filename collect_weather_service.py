@@ -1,5 +1,5 @@
 import aiohttp
-KELVIN_TO_CELSIUS = -271.15
+from settings import KELVIN_TO_CELSIUS
 
 
 async def get_temp(url):
