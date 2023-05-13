@@ -1,4 +1,4 @@
-from city_geo import get_geo
+from city.city_geo import get_geo
 from settings import BASE_URL, API_KEY
 
 
