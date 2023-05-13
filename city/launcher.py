@@ -4,12 +4,12 @@ from logger_config import cw_logger as logger
 
 # from categories import load_all_categories
 # from items import load_all_items
-from city_geo import collect_city_info
+from city_geo import collect_city_info, collect_weather
 
 LAUNCH_OPTIONS = {
     "start": {
         "--city": collect_city_info,
-        # "--items": load_all_items,
+        "--weather": collect_weather,
     },
 }
 

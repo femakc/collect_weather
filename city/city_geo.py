@@ -5,11 +5,14 @@ from typing import Optional
 import aiohttp
 import requests
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import delete
+from sqlalchemy import delete, select, update
 
-from db.models import City
+from api.handlers import get_weather
+from collect_weather_service import get_temp
+from db.models import City, Weather
 from db.session import get_db
-from settings import X_API_KEY
+# from make_url import make_weather_url
+from settings import X_API_KEY, BASE_URL, API_KEY
 from exceptions import EmptyResponseError, ResponseStatusCodeError
 from logger_config import cw_logger as logger
 
@@ -17,6 +20,45 @@ from logger_config import cw_logger as logger
 # BASE_URL = "https://api.openweathermap.org/"
 # API_KEY = "0101452058a9a7945c8b353b7f8d618f"
 # X_API_KEY = "hgwMzL0zKdvwe2cljulQ9g==ToLekCxPkDwwFoON"
+
+
+async def update_city(obj, city_id):
+    db = get_db()
+    session: AsyncSession = await anext(db)
+    one_weather = Weather(temp=obj["temp"], timestamp=obj["timestamp"])
+    # one_city = select(City).where(City.id == city_id)
+
+    async with session.begin():
+        session.add(one_weather)
+        # await session.commit()
+        # one_city.weather = one_weather.id
+        await session.commit()
+
+
+
+async def one_city_weather(city, lat, lon):
+    # db = get_db()
+    # session: AsyncSession = await anext(db)
+    # async with session.begin():
+
+    # url = await make_weather_url(city, lat, lon)
+    url = f"{BASE_URL}data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}"
+    weather_dict = await get_temp(url)
+    # result = temp
+    return weather_dict
+
+
+async def collect_weather():
+    db = get_db()
+    session: AsyncSession = await anext(db)
+    async with session.begin():
+        selectable = select(City)
+
+        cites = await session.execute(selectable)
+
+        for city in cites.scalars():
+            obj = await one_city_weather(city.name, city.latitude, city.longitude)
+            await update_city(obj, city.id)
 
 
 async def collect_city_info():
