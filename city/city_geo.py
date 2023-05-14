@@ -22,29 +22,21 @@ from logger_config import cw_logger as logger
 # X_API_KEY = "hgwMzL0zKdvwe2cljulQ9g==ToLekCxPkDwwFoON"
 
 
-async def update_city(obj, city_id):
+async def update_city(obj):
     db = get_db()
     session: AsyncSession = await anext(db)
-    one_weather = Weather(temp=obj["temp"], timestamp=obj["timestamp"])
     # one_city = select(City).where(City.id == city_id)
 
     async with session.begin():
+        one_weather = Weather(temp=obj["temp"], timestamp=obj["timestamp"])
         session.add(one_weather)
-        # await session.commit()
-        # one_city.weather = one_weather.id
-        await session.commit()
+        return one_weather
 
 
 
 async def one_city_weather(city, lat, lon):
-    # db = get_db()
-    # session: AsyncSession = await anext(db)
-    # async with session.begin():
-
-    # url = await make_weather_url(city, lat, lon)
     url = f"{BASE_URL}data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}"
     weather_dict = await get_temp(url)
-    # result = temp
     return weather_dict
 
 
@@ -57,8 +49,12 @@ async def collect_weather():
         cites = await session.execute(selectable)
 
         for city in cites.scalars():
+            print(city.weather)
             obj = await one_city_weather(city.name, city.latitude, city.longitude)
-            await update_city(obj, city.id)
+            weather = await update_city(obj)
+            city.weather = weather.id
+            session.add(city)
+        await session.commit()
 
 
 async def collect_city_info():
