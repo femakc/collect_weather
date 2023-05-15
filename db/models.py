@@ -1,6 +1,6 @@
 from sqlalchemy import (ForeignKey, Integer, String,
-                        DateTime, Boolean, Column, Float)
-from sqlalchemy.orm import declarative_base, relationship, Mapped
+                        Boolean, Column, Float)
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
@@ -11,7 +11,7 @@ class Weather(Base):
     id = Column(Integer, primary_key=True)
     temp = Column(Integer)
     timestamp = Column(Integer)
-    # city = relationship("City", uselist=False, back_populates="city")
+    city = relationship("City", uselist=False, back_populates="weather")
 
 
 class City(Base):
@@ -25,5 +25,5 @@ class City(Base):
     population = Column(Integer)
     is_capital = Column(Boolean)
     weather_id = Column(Integer, ForeignKey("weather.id"))
-    weather = relationship("Weather", backref="city")
+    weather = relationship("Weather", back_populates="city")
 

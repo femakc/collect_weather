@@ -1,8 +1,8 @@
-"""comment
+"""itial
 
-Revision ID: 71d3085c350b
+Revision ID: 0b8f20fde119
 Revises: 
-Create Date: 2023-05-13 07:58:35.821350
+Create Date: 2023-05-16 01:36:28.039309
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '71d3085c350b'
+revision = '0b8f20fde119'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,8 +32,8 @@ def upgrade() -> None:
     sa.Column('country', sa.String(), nullable=True),
     sa.Column('population', sa.Integer(), nullable=True),
     sa.Column('is_capital', sa.Boolean(), nullable=True),
-    sa.Column('weather', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['weather'], ['weather.id'], ),
+    sa.Column('weather_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['weather_id'], ['weather.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

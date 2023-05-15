@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-
+from pydantic.schema import datetime
 
 class TunedModel(BaseModel):
     class Config:
@@ -11,7 +11,7 @@ class TunedModel(BaseModel):
 class WeatherShema(TunedModel):
     id: int
     temp: int
-    timestamp: int
+    timestamp: datetime
 
 
 class CityShema(TunedModel):
@@ -23,6 +23,4 @@ class CityShema(TunedModel):
     population: int
     is_capital: bool
     weather_id: int
-    weather: WeatherShema = Field(None, alias='Weather')
-    # weather: int
-
+    weather: WeatherShema

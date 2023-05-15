@@ -1,10 +1,9 @@
 import aiohttp
 
-from db.models import Weather
 from settings import KELVIN_TO_CELSIUS
 
 
-async def get_temp(url):
+async def get_weather_items(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url, ssl=False) as response:
             html = await response.json()
