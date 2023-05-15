@@ -45,14 +45,12 @@ async def collect_weather():
     session: AsyncSession = await anext(db)
     async with session.begin():
         selectable = select(City)
-
         cites = await session.execute(selectable)
 
         for city in cites.scalars():
-            print(city.weather)
             obj = await one_city_weather(city.name, city.latitude, city.longitude)
             weather = await update_city(obj)
-            city.weather = weather.id
+            city.weather_id = weather.id
             session.add(city)
         await session.commit()
 
@@ -75,9 +73,7 @@ async def collect_city_info():
             raise EmptyResponseError()
 
         inst_lst = [City(**dct) for dct in response_json]
-        # logger.info(
-        #     f"Вот что мы собрали: {inst_lst}"
-        # )
+
     except Exception as error:
         logger.exception(error)
         sys.exit()
