@@ -1,11 +1,13 @@
+import asyncio
+
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete
 
 from city.prepare_weather_item import get_weather_items
 from db.models import City, Weather
 from db.session import get_db
-from settings import BASE_URL, API_KEY
 from logger_config import cw_logger as logger
+from settings import API_KEY, BASE_URL
 
 
 async def update_city(obj):
@@ -26,6 +28,7 @@ async def one_city_weather(city, lat, lon):
 
 
 async def collect_weather():
+    await asyncio.sleep(2)
     db = get_db()
     session: AsyncSession = await anext(db)
     async with session.begin():

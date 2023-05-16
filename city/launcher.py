@@ -1,9 +1,9 @@
 import asyncio
 
+from city_geo import collect_weather
+
 from city.collect_city import collect_city_info, collect_city_info_second
 from logger_config import cw_logger as logger
-
-from city_geo import collect_weather
 
 LAUNCH_OPTIONS = {
     "start": {

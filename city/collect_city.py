@@ -1,13 +1,16 @@
+import asyncio
 import sys
 from http import HTTPStatus
+
 import requests
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import delete
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from city.exceptions import EmptyResponseError, ResponseStatusCodeError
 from db.models import City
 from db.session import get_db
-from settings import X_API_KEY
 from logger_config import cw_logger as logger
+from settings import X_API_KEY
 
 
 async def collect_city_info():
@@ -41,6 +44,7 @@ async def collect_city_info():
 
 
 async def collect_city_info_second():
+    await asyncio.sleep(1)
     db = get_db()
     session: AsyncSession = await anext(db)
     f_url = "https://api.api-ninjas.com/v1/city?max_population=10000000&limit=20"

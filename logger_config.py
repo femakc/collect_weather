@@ -1,7 +1,6 @@
 import logging
 from logging.config import dictConfig
 
-
 DEFAULT_LEVEL = "DEBUG"
 
 logging_schema = {

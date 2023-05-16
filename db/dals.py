@@ -1,9 +1,10 @@
 from typing import List
 
 from sqlalchemy import select
+from sqlalchemy.orm import joinedload
+
 from db.models import City
 from db.session import get_db
-from sqlalchemy.orm import joinedload
 
 
 class AllCityDAL:

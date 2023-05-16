@@ -1,9 +1,11 @@
+from typing import Any
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from api.shemas import CityShema
 from db.dals import AllCityDAL
 from db.session import get_db
-from typing import Any
 
 cw_router = APIRouter()
 

@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from pydantic.schema import datetime
 
+
 class TunedModel(BaseModel):
     class Config:
         """tells pydantic to convert even non dict obj to json"""

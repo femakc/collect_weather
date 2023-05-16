@@ -3,8 +3,25 @@ services:
   db:
     container_name: "db"
     image: postgres:13.0-alpine
-    restart: always
+    restart: on-failure
     env_file:
       - ./.env
+    volumes:
+      - type: bind
+        source: ./db_data
+        target: /var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  app:
+    container_name: "app"
+    build: .
+    restart: on-failure
+    env_file:
+      - ./.env
+    volumes:
+      - .:/app
+#    ports:
+#      - "8008:8000"
+    depends_on:
+      - db
