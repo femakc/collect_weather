@@ -52,12 +52,12 @@ main_api_router.include_router(
 app.include_router(main_api_router)
 
 
-def main():
-    try:
-        uvicorn.run(app, host=HOST, port=PORT)
-    except Exception as e:
-        logger.exception("uvicorn failed %s ", e)
-
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     try:
+#         uvicorn.run(app, host=HOST, port=PORT)
+#     except Exception as e:
+#         logger.exception("uvicorn failed %s ", e)
+#
+#
+# if __name__ == '__main__':
+#     main()

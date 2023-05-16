@@ -1,11 +1,11 @@
 FROM python:3.10
 
-WORKDIR /app
+WORKDIR /code
 
-COPY . /app/
+COPY ./requirements.txt /code/requirements.txt
 
-RUN pip install -U pip  \
-    &&pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-CMD ["python", "main.py"]
-#CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+COPY ./ /code/
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
