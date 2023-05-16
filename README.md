@@ -1,44 +1,78 @@
-# colllect_weather
+# Collect_weather_service
+## Описание проекта:
+Микросервис, собирающий информацию по самым большим городам мира, опрашивая
+[ninjas.com](https://api-ninjas.com/api/city) , и 
+на основе собранных данных проводит опрос API  [openweathermap](https://openweathermap.org).
+Все данные записываются в БД [PostgreSQL](https://www.postgresql.org/).Управляет сервисом 
+[FastAPI](https://fastapi.tiangolo.com/).
 
-X_API_KEY 
-```python
-https://api-ninjas.com/api/city
-```
+## Запуск проекта
 
-API_KEY 
-```python
-https://openweathermap.org
-```
+1. Клонируем кодовую базу
+
+
+2. Перед запуском сервиса необходимо добавить в корень проекта файл *.env* переменные окружения :
+
+- X_API_KEY - доступ к API *ninjas.com* 
+[инструкция по получению](https://api-ninjas.com/faq#as-1)
+
+- API_KEY - доступ к API *openweathermap.org* 
+[инструкция по получению](https://openweathermap.org/appid)
+
 ### .env
 ```python
-X_API_KEY="hgwMzL0zKdvwe2cljulQ9g==ToLekCxPkDwwFoON"
+X_API_KEY="api_key_api-ninjas"
 BASE_URL="https://api.openweathermap.org/"
-API_KEY="0101452058a9a7945c8b353b7f8d618f"
+API_KEY="api_key_openweathermap.org"
 DB_NAME="cw"
 POSTGRES_USER="cw"
 POSTGRES_PASSWORD="cw"
 POSTGRES_URL="postgresql+asyncpg://cw:cw@0.0.0.0:5432/cw"
 ```
 
-Настройка миграций
-Для накатывания миграций, если файла alembic.ini ещё нет, нужно запустить в терминале команду:
+3. Запукаем Docker-compose файл
 ```python
-alembic init migrations
+docker-compose up -d
 ```
-После этого будет создана папка с миграциями и конфигурационный файл для алембика.
 
-В alembic.ini нужно задать адрес базы данных, в которую будем катать миграции.
+**После успешного запуска сервис начнет сбор данных, 
+которые будут автоматически обновляться каждый час.**
 
-Дальше идём в папку с миграциями и открываем env.py, там вносим изменения в блок, где написано
+Получить данные можно по адресу http://localhost/api/get_weather
 
-from myapp import mymodel
-Дальше вводим: 
-```python
-alembic revision --autogenerate -m "comment"
-```
-Будет создана миграция
-Дальше вводим: 
-```python
-alembic upgrade heads
+## Пример полученных данных
+```json
+[
+    {
+        "id": 1,
+        "name": "Tokyo",
+        "latitude": 35.6897,
+        "longitude": 139.692,
+        "country": "JP",
+        "population": 37977000,
+        "is_capital": true,
+        "weather_id": 401,
+        "weather": {
+            "id": 401,
+            "temp": 19,
+            "timestamp": "2023-05-16T16:59:25+00:00"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Jakarta",
+        "latitude": -6.2146,
+        "longitude": 106.845,
+        "country": "ID",
+        "population": 34540000,
+        "is_capital": true,
+        "weather_id": 402,
+        "weather": {
+            "id": 402,
+            "temp": 30,
+            "timestamp": "2023-05-16T16:59:25+00:00"
+        }
+    }
+]
 ```
 

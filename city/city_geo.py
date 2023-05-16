@@ -20,9 +20,9 @@ async def update_city(obj):
         return one_weather
 
 
-
-async def one_city_weather(city, lat, lon):
+async def one_city_weather(lat, lon):
     url = f"{BASE_URL}data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}"
+    logger.info(f"URL : {url}")
     weather_dict = await get_weather_items(url)
     return weather_dict
 
@@ -39,7 +39,7 @@ async def collect_weather():
             old_weather = None
             if city.weather_id:
                 old_weather = city.weather_id
-            obj = await one_city_weather(city.name, city.latitude, city.longitude)
+            obj = await one_city_weather(city.latitude, city.longitude)
             weather = await update_city(obj)
             city.weather_id = weather.id
             session.add(city)
