@@ -8,8 +8,10 @@
 
 ## Запуск проекта
 
-1. Клонируем кодовую базу
-
+1. Клонируем репозиторий
+```commandline
+$ git clone https://github.com/femakc/collect_weather.git
+```
 
 2. Перед запуском сервиса необходимо добавить в корень проекта файл *.env* переменные окружения :
 
@@ -20,7 +22,7 @@
 [инструкция по получению](https://openweathermap.org/appid)
 
 ### .env
-```python
+```dotenv
 X_API_KEY="api_key_api-ninjas"
 BASE_URL="https://api.openweathermap.org/"
 API_KEY="api_key_openweathermap.org"
@@ -31,8 +33,8 @@ POSTGRES_URL="postgresql+asyncpg://cw:cw@0.0.0.0:5432/cw"
 ```
 
 3. Запукаем Docker-compose файл
-```python
-docker-compose up -d
+```commandline
+$ docker-compose up -d
 ```
 
 **После успешного запуска сервис начнет сбор данных, 

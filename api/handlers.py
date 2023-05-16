@@ -21,4 +21,3 @@ async def get_weather(db: AsyncSession = Depends(get_db)) -> list[Any]:
         async with session.begin():
             cw_dal = AllCityDAL(session)
             return await cw_dal.get_all_items()
-
