@@ -2,13 +2,12 @@ import asyncio
 
 from city_geo import collect_weather
 
-from city.collect_city import collect_city_info, collect_city_info_second
+from city.collect_city import collect_city_info
 from logger_config import cw_logger as logger
 
 LAUNCH_OPTIONS = {
     "start": {
         "--city": collect_city_info,
-        "--city2": collect_city_info_second,  # TODO crutch + 20 cites
         "--weather": collect_weather,
     },
 }
