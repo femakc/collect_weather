@@ -29,6 +29,7 @@ async def one_city_weather(lat, lon):
 
 async def collect_weather():
     await asyncio.sleep(1)
+    old_weather_list = []
     db = get_db()
     session: AsyncSession = await anext(db)
     async with session.begin():
@@ -36,7 +37,7 @@ async def collect_weather():
         cites = await session.execute(selectable)
 
         for city in cites.scalars():
-            old_weather_list = []
+
             if city.weather_id:
                 old_weather_list.append(city.weather_id)
             obj = await one_city_weather(city.latitude, city.longitude)

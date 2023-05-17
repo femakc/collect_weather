@@ -27,7 +27,7 @@ def create_app() -> FastAPI:
             logger.exception("collect start failed %s ", e)
 
     @app.on_event("startup")
-    @repeat_every(seconds=60 * 60)
+    @repeat_every(seconds=60 * 1)
     async def repeat_collect():
         try:
             tasks = [
