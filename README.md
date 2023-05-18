@@ -23,13 +23,13 @@ $ git clone https://github.com/femakc/collect_weather.git
 
 ### .env
 ```dotenv
-X_API_KEY="api_key_api-ninjas"
-BASE_URL="https://api.openweathermap.org/"
-API_KEY="api_key_openweathermap.org"
-DB_NAME="cw"
-POSTGRES_USER="cw"
-POSTGRES_PASSWORD="cw"
-POSTGRES_URL="postgresql+asyncpg://cw:cw@0.0.0.0:5432/cw"
+X_API_KEY=api_key_api-ninjas
+BASE_URL=https://api.openweathermap.org/
+API_KEY=api_key_openweathermap.org
+DB_NAME=cw
+POSTGRES_USER=cw
+POSTGRES_PASSWORD=cw
+POSTGRES_URL=postgresql+asyncpg://cw:cw@0.0.0.0:5432/cw
 ```
 
 3. Запукаем Docker-compose файл
