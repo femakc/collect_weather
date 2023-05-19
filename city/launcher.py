@@ -1,11 +1,12 @@
 import asyncio
+from typing import Optional
 
 from city_geo import collect_weather
 
 from city.collect_city import collect_city_info
 from logger_config import cw_logger as logger
 
-LAUNCH_OPTIONS = {
+LAUNCH_OPTIONS: dict = {
     "start": {
         "--city": collect_city_info,
         "--weather": collect_weather,
@@ -13,12 +14,12 @@ LAUNCH_OPTIONS = {
 }
 
 
-def main(argv=None):
+def main(argv: Optional[list[str]] = None):
     if argv is None:
         logger.debug("argv is None")
         return
 
-    func_name = argv[1:]
+    func_name: list[str] = argv[1:]
     try:
         logger.info(
             "start launcher with param: %s %s",

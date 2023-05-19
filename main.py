@@ -17,7 +17,7 @@ def create_app() -> FastAPI:
     app.logger = logger
 
     @app.on_event("startup")
-    async def start_collect_city():
+    async def start_collect_city() -> None:
         try:
             tasks = [
                 asyncio.create_task(collect_city_info()),
@@ -28,7 +28,7 @@ def create_app() -> FastAPI:
 
     @app.on_event("startup")
     @repeat_every(seconds=60 * 60)
-    async def repeat_collect():
+    async def repeat_collect() -> None:
         try:
             await collect_weather()
         except Exception as e:
