@@ -9,7 +9,10 @@ from logger_config import cw_logger as logger
 from settings import KELVIN_TO_CELSIUS
 
 
-async def get_weather_items(url: str, city_id: int, old_weather: Optional[int]) -> dict:
+async def get_weather_items(
+        url: str,
+        city_id: int,
+        old_weather: Optional[int]) -> dict:
     add_dict: dict = {}
     try:
         async with aiohttp.ClientSession() as s:
@@ -18,7 +21,9 @@ async def get_weather_items(url: str, city_id: int, old_weather: Optional[int]) 
                     logger.error("response: %s", r)
                     raise ResponseStatusCodeError()
                 response: Any = await r.json()
-                temp: int = int(response.get('main').get('temp') + KELVIN_TO_CELSIUS)
+                temp: int = int(
+                    response.get('main').get('temp') + KELVIN_TO_CELSIUS
+                )
                 timestamp: Optional[str] = response.get('dt')
                 add_dict["weather"] = Weather(temp=temp, timestamp=timestamp)
                 add_dict["city"] = city_id

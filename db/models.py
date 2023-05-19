@@ -25,4 +25,3 @@ class City(Base):
     is_capital = Column(Boolean)
     weather_id = Column(Integer, ForeignKey("weather.id"))
     weather = relationship("Weather", back_populates="city")
-

@@ -31,24 +31,25 @@ async def collect_weather() -> None:
             if city.weather_id:
                 old_weather: int = city.weather_id
             url: str = await get_url(city.latitude, city.longitude)
-            tasks.append(asyncio.create_task(get_weather_items(url, city, old_weather)))
+            tasks.append(asyncio.create_task(get_weather_items(
+                url, city, old_weather)))
 
         await session.flush()
 
         for task in tasks:
             weather_city: dict = await task
             logger.debug("weather_city : %s", weather_city)
-            old_weather: int = weather_city["old_weather"]
             weather: Any = weather_city["weather"]
-            session.add(weather)
+            session.add(weather_city["weather"])
             await session.flush()
 
             city: Any = weather_city["city"]
             city.weather_id = weather.id
             session.add(city)
-            if old_weather:
+            if weather_city["old_weather"]:
                 logger.debug("Deleting weather с id: %d", old_weather)
-                del_weather = delete(Weather).where(Weather.id == old_weather)
+                del_weather = delete(Weather).where(
+                    Weather.id == weather_city["old_weather"])
                 await session.execute(del_weather)
 
         await session.commit()

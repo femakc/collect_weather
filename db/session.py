@@ -7,6 +7,8 @@ from settings import POSTGRES_URL
 
 engine = create_async_engine(
     POSTGRES_URL,
+    pool_size=200,
+    max_overflow=250,
     future=True,
     echo=True,
     execution_options={"isolation_level": "READ COMMITTED"},
@@ -15,7 +17,9 @@ engine = create_async_engine(
 async_session = sessionmaker(
     engine,
     expire_on_commit=False,
-    class_=AsyncSession
+    class_=AsyncSession,
+    autocommit=False,
+    autoflush=False
 )
 
 
