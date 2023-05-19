@@ -21,11 +21,12 @@ def main(argv=None):
     func_name = argv[1:]
     try:
         logger.info(
-            f"start launcher with param: {func_name[0]} {func_name[1]}"
+            "start launcher with param: %s %s",
+            func_name[0], func_name[1]
         )
         asyncio.run(LAUNCH_OPTIONS[func_name[0]][func_name[1]]())
     except Exception as error:
-        logger.exception(f"launcher failed: {error}")
+        logger.exception(error)
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ async def get_weather_items(url, city_id, old_weather):
         async with aiohttp.ClientSession() as s:
             async with s.get(url, ssl=False) as r:
                 if r.status != 200:
-                    logger.error(f"response: {r}")
+                    logger.error("response: %s", r)
                     raise ResponseStatusCodeError()
                 response = await r.json()
                 temp = int(response.get('main').get('temp') + KELVIN_TO_CELSIUS)

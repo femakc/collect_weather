@@ -12,7 +12,7 @@ from settings import API_KEY, BASE_URL
 
 async def get_url(lat, lon):
     url = f"{BASE_URL}data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}"
-    logger.debug(f"URL : {url}")
+    logger.debug("URL : %s", url)
     return url
 
 
@@ -36,6 +36,7 @@ async def collect_weather():
 
         for task in tasks:
             weather_city = await task
+            logger.debug("weather_city : %s", weather_city)
             old_weather = weather_city[2]
             weather = weather_city[0]
             session.add(weather)
@@ -45,7 +46,7 @@ async def collect_weather():
             city.weather_id = weather.id
             session.add(city)
             if old_weather:
-                logger.debug(f"Deleting weather с id: {old_weather}")
+                logger.debug("Deleting weather с id: %d", old_weather)
                 del_weather = delete(Weather).where(Weather.id == old_weather)
                 await session.execute(del_weather)
 

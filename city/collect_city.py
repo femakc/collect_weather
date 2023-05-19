@@ -23,7 +23,7 @@ async def collect_city_info():
             async with aiohttp.ClientSession() as s:
                 async with s.get(url, headers=headers, ssl=False) as r:
                     if r.status != 200:
-                        logger.error(f"response: {r}")
+                        logger.error("response: %s", r)
                         raise ResponseStatusCodeError()
                     response = await r.json()
                     response_json: list[dict] = response
@@ -34,7 +34,7 @@ async def collect_city_info():
             logger.exception(error)
             sys.exit()
 
-    logger.info(f"response: {inst_lst}")
+    logger.debug("response: ", inst_lst)
 
     db = get_db()
     session: AsyncSession = await anext(db)

@@ -51,8 +51,8 @@ app.include_router(main_api_router)
 def main():
     try:
         uvicorn.run(app, host=HOST, port=PORT)
-    except Exception as e:
-        logger.exception("uvicorn failed %s ", e)
+    except Exception as error:
+        logger.exception(error)
 
 
 if __name__ == '__main__':
