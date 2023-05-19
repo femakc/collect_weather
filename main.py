@@ -6,7 +6,7 @@ from fastapi.routing import APIRouter
 from fastapi_utils.tasks import repeat_every
 
 from api.handlers import cw_router
-from city.city_geo import collect_weather
+from city.collect_city_weather import collect_weather
 from city.collect_city import collect_city_info
 from logger_config import cw_logger as logger
 from settings import API_PREFIX, API_TITLE, HOST, PORT, ROUTER_TAGS

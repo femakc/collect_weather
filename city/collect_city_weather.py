@@ -36,14 +36,14 @@ async def collect_weather() -> None:
         await session.flush()
 
         for task in tasks:
-            weather_city: list = await task
+            weather_city: dict = await task
             logger.debug("weather_city : %s", weather_city)
-            old_weather: int = weather_city[2]
-            weather: Any = weather_city[0]
+            old_weather: int = weather_city["old_weather"]
+            weather: Any = weather_city["weather"]
             session.add(weather)
             await session.flush()
 
-            city: Any = weather_city[1]
+            city: Any = weather_city["city"]
             city.weather_id = weather.id
             session.add(city)
             if old_weather:

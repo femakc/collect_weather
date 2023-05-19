@@ -9,8 +9,8 @@ from logger_config import cw_logger as logger
 from settings import KELVIN_TO_CELSIUS
 
 
-async def get_weather_items(url: str, city_id: int, old_weather: Optional[int]) -> list:
-    add_list: list = []
+async def get_weather_items(url: str, city_id: int, old_weather: Optional[int]) -> dict:
+    add_dict: dict = {}
     try:
         async with aiohttp.ClientSession() as s:
             async with s.get(url, ssl=False) as r:
@@ -20,12 +20,12 @@ async def get_weather_items(url: str, city_id: int, old_weather: Optional[int]) 
                 response: Any = await r.json()
                 temp: int = int(response.get('main').get('temp') + KELVIN_TO_CELSIUS)
                 timestamp: Optional[str] = response.get('dt')
-                add_list.append(Weather(temp=temp, timestamp=timestamp))
-                add_list.append(city_id)
-                add_list.append(old_weather)
+                add_dict["weather"] = Weather(temp=temp, timestamp=timestamp)
+                add_dict["city"] = city_id
+                add_dict["old_weather"] = old_weather
 
     except Exception as error:
         logger.exception(error)
         sys.exit()
 
-    return add_list
+    return add_dict
