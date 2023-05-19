@@ -42,6 +42,12 @@ $ docker-compose up -d
 
 Получить данные можно по адресу http://localhost/api/get_weather
 
+После запуска будет доступна документация по адресам: 
+
+http://localhost/redoc
+
+http://localhost/docs
+
 ## Пример полученных данных
 ```json
 [
