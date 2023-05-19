@@ -27,13 +27,10 @@ def create_app() -> FastAPI:
             logger.exception("collect start failed %s ", e)
 
     @app.on_event("startup")
-    @repeat_every(seconds=60 * 1)
+    @repeat_every(seconds=60 * 60)
     async def repeat_collect():
         try:
-            tasks = [
-                asyncio.create_task(collect_weather()),
-            ]
-            await asyncio.wait(tasks)
+            await collect_weather()
         except Exception as e:
             logger.exception("repeat collect start failed %s ", e)
     return app
