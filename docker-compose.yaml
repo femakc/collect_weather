@@ -11,6 +11,20 @@ services:
     ports:
       - 5432:5432
 
+  db_test:
+    container_name: "db_test"
+    image: postgres:13.0-alpine
+    restart: on-failure
+    environment:
+      - DB_NAME=${DB_NAME_TEST}
+      - POSTGRES_USER=${POSTGRES_USER_TEST}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_TEST}
+    volumes:
+      - db_data:/var/lib/postgresql/data_test/
+    ports:
+      - 6000:5432
+
+
   app:
     container_name: "app"
     restart: on-failure
