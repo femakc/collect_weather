@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 cw_log.log
 .pytest_cache/
-.idea
+.idea/
