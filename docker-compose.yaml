@@ -2,7 +2,7 @@ version: '3.3'
 services:
   db:
     container_name: "db"
-    image: postgres:13.0-alpine
+    image: postgres:15-alpine
     restart: on-failure
     env_file:
       - ./.env
@@ -10,6 +10,20 @@ services:
       - db_data:/var/lib/postgresql/data/
     ports:
       - 5432:5432
+
+  db_test:
+    container_name: "db_test"
+    image: postgres:15-alpine
+    restart: on-failure
+    environment:
+      - DB_NAME=${DB_NAME_TEST}
+      - POSTGRES_USER=${POSTGRES_USER_TEST}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_TEST}
+    volumes:
+      - db_data:/var/lib/postgresql/data_test/
+    ports:
+      - 6000:5432
+
 
   app:
     container_name: "app"

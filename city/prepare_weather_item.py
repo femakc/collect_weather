@@ -1,9 +1,9 @@
 import sys
-from typing import Any, Optional
+from typing import Optional
 
 import aiohttp
 
-from city.exceptions import ResponseStatusCodeError
+from city.exceptions import ResponseStatusCodeError, ResponseCityWeatherApiError
 from db.models import Weather
 from logger_config import cw_logger as logger
 from settings import KELVIN_TO_CELSIUS
@@ -20,7 +20,7 @@ async def get_weather_items(
                 if r.status != 200:
                     logger.error("response: %s", r)
                     raise ResponseStatusCodeError()
-                response: Any = await r.json()
+                response: dict = await r.json()
                 temp: int = int(
                     response.get('main').get('temp') + KELVIN_TO_CELSIUS
                 )
@@ -29,7 +29,7 @@ async def get_weather_items(
                 add_dict["city"] = city_id
                 add_dict["old_weather"] = old_weather
 
-    except Exception as error:
+    except ResponseCityWeatherApiError as error:
         logger.exception(error)
         sys.exit()
 

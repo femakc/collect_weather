@@ -5,7 +5,7 @@ import aiohttp
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from city.exceptions import EmptyResponseError, ResponseStatusCodeError
+from city.exceptions import EmptyResponseError, ResponseStatusCodeError, ResponseCityApiError
 from db.models import City
 from db.session import get_db
 from logger_config import cw_logger as logger
@@ -31,7 +31,7 @@ async def collect_city_info() -> None:
                     if not len(response_json):
                         raise EmptyResponseError()
                     [inst_lst.append(City(**dct)) for dct in response_json]
-        except Exception as error:
+        except ResponseCityApiError as error:
             logger.exception(error)
             sys.exit()
 

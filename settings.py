@@ -26,3 +26,8 @@ POSTGRES_URL = os.environ.get(
     "POSTGRES_URL",
     default="postgresql+asyncpg://postgres:postgres@0.0.0.0:5432/postgres",
 )
+
+POSTGRES_URL_TEST = os.environ.get(
+    "POSTGRES_URL_TEST",
+    default="postgresql+asyncpg://postgres_test:postgres_test@0.0.0.0:5432/postgres_test",
+)
