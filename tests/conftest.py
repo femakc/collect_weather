@@ -39,7 +39,7 @@ app.dependency_overrides[get_db] = override_get_db
 
 
 @pytest.fixture(autouse=True, scope='session')
-async def prepare_database():
+async def prepare_database() -> None:
     async with engine_test.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     yield
@@ -48,7 +48,7 @@ async def prepare_database():
 
 
 @pytest.fixture(scope='session')
-def event_loop(request):
+def event_loop(request) -> None:
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()

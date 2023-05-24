@@ -1,5 +1,5 @@
 import asyncio
-from typing import Optional, Generator, Any
+from typing import Optional, Generator
 
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -24,8 +24,8 @@ async def collect_weather() -> None:
     db: Generator = get_db()
     session: AsyncSession = await anext(db)
     async with session.begin():
-        selectable: Any = select(City)
-        cites: Any = await session.execute(selectable)
+        selectable = select(City)
+        cites = await session.execute(selectable)
 
         for city in cites.scalars():
             if city.weather_id:
@@ -39,11 +39,11 @@ async def collect_weather() -> None:
         for task in tasks:
             weather_city: dict = await task
             logger.debug("weather_city : %s", weather_city)
-            weather: Any = weather_city["weather"]
+            weather: Weather = weather_city["weather"]
             session.add(weather_city["weather"])
             await session.flush()
 
-            city: Any = weather_city["city"]
+            city: City = weather_city["city"]
             city.weather_id = weather.id
             session.add(city)
             if weather_city["old_weather"]:

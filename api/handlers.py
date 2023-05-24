@@ -16,7 +16,7 @@ async def hello() -> str:
 
 
 @cw_router.get("/get_weather", response_model=list[CityShema])
-async def get_weather(db: AsyncSession = Depends(get_db)) -> list[Any]:
+async def get_weather(db: AsyncSession = Depends(get_db)) -> list:
     async with db as session:
         async with session.begin():
             return await AllCityDAL(session).get_all_items()
